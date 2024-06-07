@@ -76,6 +76,7 @@ def get_partivinder_total(forbundvinder, partivinder):
         rundevinder.append(pv)
     return rundevinder
 
+
 def simulate_all(stemmer_parti):
     forbunds_stemmer = calc_forbunds_stemmer(stemmer_parti)
     runde_base = gen_runder(forbunds_stemmer)
@@ -83,6 +84,7 @@ def simulate_all(stemmer_parti):
     partivinder = get_partivinder_internal(forbundvinder, stemmer_parti)
     tot_vinder = get_partivinder_total(forbundvinder, partivinder)
     return tot_vinder
+
 
 def draw_scenarios(p_hat, n, antal_scenarier = 10_000):
     mu = n * p_hat
