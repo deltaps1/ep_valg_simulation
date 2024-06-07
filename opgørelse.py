@@ -1,15 +1,20 @@
+from typing import Literal
 import pandas as pd
 import numpy as np
 from random import choice
 from tqdm import tqdm
 
-
-def tildel_forbund(parti):
+def get_valgforbund():
     forbund = [
         ["A", "F", "Å"],
         ["C", "I"],
         ["V", "M", "B"]
     ]
+    return forbund
+
+def tildel_forbund(parti, forbund: list[list] | Literal[False] = False):
+    if forbund == False:
+        forbund = get_valgforbund()
     for x in forbund:
         if parti in x:
             return "".join(x)
