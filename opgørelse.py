@@ -106,12 +106,11 @@ def setup_stemmer(create_scenarios = True):
                 stemmer = lambda df: df.stemmer / 100)
     )
     if create_scenarios:
-        stemmer = (
-            stemmer
-            .assign(scenarier = lambda df: df.stemmer
-                    .apply(draw_scenarios, args=[n, 50_000])
-                )
+        stemmer = stemmer.assign(
+            scenarier = lambda df: df.stemmer.apply(
+                draw_scenarios, args=[n, 50_000]
             )
+        )
         
     return stemmer
 
