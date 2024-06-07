@@ -62,7 +62,12 @@ def get_partivinder_internal(forbundvinder, stemmer_parti):
     partivindere = {}
     for vinder in set(forbundvinder):
         numb_of_rounds = forbundvinder.count(vinder)
-        df_input = stemmer_parti.query(f"forbund == @vinder").set_index("parti").stemmer
+        df_input = (
+            stemmer_parti
+            .query(f"forbund == @vinder")
+            .set_index("parti")
+            .stemmer
+        )
         stemmedict = gen_runder(df_input, numb_of_rounds)
         subvinder = simulate(stemmedict, numb_of_rounds)
         partivindere[vinder] = subvinder
@@ -103,14 +108,19 @@ def setup_stemmer(create_scenarios = True):
     if create_scenarios:
         stemmer = (
             stemmer
-            .assign(scenarier = lambda df: df.stemmer.apply(draw_scenarios, args=[n, 50_000]))
-        )
+            .assign(scenarier = lambda df: df.stemmer
+                    .apply(draw_scenarios, args=[n, 50_000])
+                )
+            )
+        
     return stemmer
 
 def opgør_mandater_i_df(stemmer, simulation_result):
     temp_df = (
         stemmer["parti stemmer forbund".split()].copy()
-        .assign(mandater = lambda df: df.parti.apply(lambda x: simulation_result.count(x)))
+        .assign(mandater = lambda df: df.parti.apply(
+            lambda x: simulation_result.count(x))
+        )
         .assign(simnum = x)
     )
     return temp_df
