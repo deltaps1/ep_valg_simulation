@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from random import choice
 from tqdm import tqdm
-from matplotlib import pyplot as plt
 
 forbund = [
     ["A", "F", "Å"],
