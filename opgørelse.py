@@ -3,13 +3,13 @@ import numpy as np
 from random import choice
 from tqdm import tqdm
 
-forbund = [
-    ["A", "F", "Å"],
-    ["C", "I"],
-    ["V", "M", "B"]
-]
 
 def tildel_forbund(parti):
+    forbund = [
+        ["A", "F", "Å"],
+        ["C", "I"],
+        ["V", "M", "B"]
+    ]
     for x in forbund:
         if parti in x:
             return "".join(x)
