@@ -88,14 +88,22 @@ def draw_scenarios(p_hat, n, antal_scenarier = 10_000):
     scenarier_i_procenter = scenarier / n
     return scenarier_i_procenter
 
-if __name__ == "__main__":
-    n = 2085
+def setup_stemmer(create_scenarios = True):
     stemmer = (
         pd.read_csv("stemmer")
         .assign(forbund = lambda df: df.parti.apply(tildel_forbund),
                 stemmer = lambda df: df.stemmer / 100)
-        .assign(scenarier = lambda df: df.stemmer.apply(draw_scenarios, args=[n, 50_000]))
     )
+    if create_scenarios:
+        stemmer = (
+            stemmer
+            .assign(scenarier = lambda df: df.stemmer.apply(draw_scenarios, args=[n, 50_000]))
+        )
+    return stemmer
+
+if __name__ == "__main__":
+    n = 2085
+    stemmer = setup_stemmer()
     dfs_res = []
     for x in tqdm(range(10_000)):
         stemmer = (
