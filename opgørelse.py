@@ -107,10 +107,10 @@ def setup_stemmer(create_scenarios = True):
 
 def opgør_mandater_i_df(stemmer, simulation_result):
     temp_df = (
-            stemmer["parti stemmer forbund".split()].copy()
-            .assign(mandater = lambda df: df.parti.apply(lambda x: simulation_result.count(x)))
-            .assign(simnum = x)
-            )
+        stemmer["parti stemmer forbund".split()].copy()
+        .assign(mandater = lambda df: df.parti.apply(lambda x: simulation_result.count(x)))
+        .assign(simnum = x)
+    )
     return temp_df
 
 if __name__ == "__main__":
