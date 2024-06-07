@@ -100,6 +100,14 @@ def setup_stemmer(create_scenarios = True):
         )
     return stemmer
 
+def opgør_mandater_i_df(stemmer, simulation_result):
+    temp_df = (
+            stemmer["parti stemmer forbund".split()].copy()
+            .assign(mandater = lambda df: df.parti.apply(lambda x: simulation_result.count(x)))
+            .assign(simnum = x)
+            )
+    return temp_df
+
 if __name__ == "__main__":
     n = 2085
     stemmer = setup_stemmer()
@@ -109,12 +117,8 @@ if __name__ == "__main__":
             stemmer
             .assign(stemmer = lambda df: df.scenarier.apply(lambda x: choice(x)))
         )
-        res = simulate_all(stemmer)
-        temp_df = (
-            stemmer["parti stemmer forbund".split()].copy()
-            .assign(mandater = lambda df: df.parti.apply(lambda x: res.count(x)))
-            .assign(simnum = x)
-        )
+        simulation_result = simulate_all(stemmer)
+        temp_df = opgør_mandater_i_df(stemmer, simulation_result)
         dfs_res.append(temp_df)
     dfs = pd.concat(dfs_res)
     dfs.to_excel("Simulation.xlsx")
